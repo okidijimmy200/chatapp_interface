@@ -1,0 +1,10 @@
+start zookeeper
+>cd kafka_2.13-2.6.0
+>bin/zookeeper-server-start.sh config/zookeeper.properties
+
+open another terminal
+start kakfa server
+>cd kafka_2.13-2.6.0
+>bin/kafka-server-start.sh config/server.properties
+
+
