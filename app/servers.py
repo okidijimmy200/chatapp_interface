@@ -1,28 +1,30 @@
-from interfaces import StreamingServiceInterface
+from interfaces import StreamingServiceInterface, UserInputDeliveryReportInterface
 from confluent_kafka import Producer, Consumer
-from interfaces import UserInputDeliveryReportInterface
+
 
 class StreamingService(StreamingServiceInterface):
 
-    def __init__(self,  user_input: UserInputDeliveryReportInterface) -> None:
+    def __init__(self, user_input: UserInputDeliveryReportInterface) -> None:
         self.user_input = user_input
     
     def publisher(self, server, channel, group=None):
         try:
-            p = Producer({'bootstrap.servers': server})
             messg = self.user_input.write_message()
-            p.poll(0)
-            p.produce(channel, messg, callback=self.user_input.delivery_report)
+            callback = self.user_input.delivery_report
 
+            p = Producer({'bootstrap.servers': server})
+            p.poll(0)
+            p.produce(channel, messg, callback=callback)
             result = p.flush()
             return result
+
         except  Exception as e:
             return (
                 f"Failed to send message:" 
                 + f"{type(e).__name__} {str(e)}"
             )
         
-    def subscriber(self, channel, start_from, server, group):
+    def subscriber(self, channel, start_from, server, group, running):
         try:
             c = Consumer({
             'bootstrap.servers': server,
@@ -32,7 +34,8 @@ class StreamingService(StreamingServiceInterface):
 
             c.subscribe([channel])
 
-            while True:
+
+            while running['running']:
                 msg = c.poll(1.0)
 
                 if msg is None:
@@ -43,7 +46,6 @@ class StreamingService(StreamingServiceInterface):
                 
                 else:
                     print('Received message: {}'.format(msg.value()))
-
         except  Exception as e:
             return (
                 f"Failed to receive message:" 

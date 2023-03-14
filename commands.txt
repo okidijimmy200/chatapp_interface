@@ -8,3 +8,4 @@ start kakfa server
 >bin/kafka-server-start.sh config/server.properties
 
 
+pytest --cov

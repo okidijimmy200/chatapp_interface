@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import Tuple
 
 class StreamingServiceInterface(ABC):
     @abstractmethod
@@ -7,7 +6,7 @@ class StreamingServiceInterface(ABC):
         pass
 
     @abstractmethod
-    def subscriber(self, channel, start_from, server, group):
+    def subscriber(self, channel, start_from, server, group, running=None):
         pass
 
 class UserInputDeliveryReportInterface(ABC):

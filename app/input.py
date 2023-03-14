@@ -3,6 +3,7 @@ from interfaces import UserInputDeliveryReportInterface, ParseArgsInterface
 
 
 class UserInputService(UserInputDeliveryReportInterface):
+
     def write_message(self):
         print('Please enter a message')
 
@@ -29,6 +30,7 @@ class UserInputService(UserInputDeliveryReportInterface):
             return "NameError occurred. err or msg isn't defined."
         
 class ParseArgsService(ParseArgsInterface):
+        
     def parse_args(self):
         try:
             parser = argparse.ArgumentParser()
