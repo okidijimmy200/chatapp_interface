@@ -1,7 +1,7 @@
 import  time, threading
 from unittest import mock
 from servers import StreamingService
-
+from models import PublisherRequest
 
 @mock.patch('input.UserInputService')
 @mock.patch('servers.Producer')
@@ -9,7 +9,7 @@ def test_producer(Producer, user_input):
     res = StreamingService(user_input)
     p = Producer({'bootstrap.servers': 'server'})
     p.flush.return_value = 'test work'
-    output = res.publisher('localhost:9092', 'mychannel', 'mygroup')
+    output = res.publisher(PublisherRequest('localhost:9092', 'mychannel', 'group'))
     assert output == 'test work'
 
 

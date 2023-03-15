@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
+from models import PublisherRequest, PublisherResponse
 
 class StreamingServiceInterface(ABC):
     @abstractmethod
-    def publisher(self, server, channel, group=None):
+    def publisher(self, req: PublisherRequest) -> PublisherResponse:
         pass
 
     @abstractmethod

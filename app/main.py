@@ -8,6 +8,7 @@ from input import (
     ParseArgsService
 )
 from servers import StreamingService
+from models import PublisherRequest
 
 class ChatApplication():
     def __init__(
@@ -22,7 +23,12 @@ class ChatApplication():
 
     def streams(self):
         if self.arg_command == 'send':
-            return self.stream_serv.publisher(channel=self.args.channel, server=self.args.server, group=self.args.group)
+            return self.stream_serv.publisher(
+                PublisherRequest(
+                self.args.channel,
+                self.args.server, 
+                self.args.group
+                ))
         
         elif self.arg_command == 'receive':
             def switch(running):

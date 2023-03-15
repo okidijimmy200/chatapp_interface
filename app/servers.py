@@ -1,5 +1,6 @@
 from interfaces import StreamingServiceInterface, UserInputDeliveryReportInterface
 from confluent_kafka import Producer, Consumer
+from models import PublisherRequest
 
 
 class StreamingService(StreamingServiceInterface):
@@ -7,14 +8,14 @@ class StreamingService(StreamingServiceInterface):
     def __init__(self, user_input: UserInputDeliveryReportInterface) -> None:
         self.user_input = user_input
     
-    def publisher(self, server, channel, group=None):
+    def publisher(self, req: PublisherRequest) -> str:
         try:
             messg = self.user_input.write_message()
             callback = self.user_input.delivery_report
 
-            p = Producer({'bootstrap.servers': server})
+            p = Producer({'bootstrap.servers': req.server})
             p.poll(0)
-            p.produce(channel, messg, callback=callback)
+            p.produce(req.channel, messg, callback=callback)
             result = p.flush()
             return result
 

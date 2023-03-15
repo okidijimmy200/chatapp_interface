@@ -1,5 +1,19 @@
-import io, sys
+import io, sys, pytest
 from input import UserInputService, ParseArgsService
+
+class Message():
+    @staticmethod
+    def topic():
+        return 'mess'
+
+    @staticmethod
+    def partition():
+        return 'age'
+
+@pytest.fixture
+def messg():
+    return Message
+
 
 
 '''test input from user'''
@@ -10,10 +24,25 @@ def test_user_input(monkeypatch):
     assert i == 'my test data input'
 
 '''test delivery report'''
-def test_delivery_report():
-    user_input = UserInputService()
-    response = user_input.delivery_report(err='error', msg='message')
-    assert type(response) is str
+def test_delivery_report(messg):
+    test_table =[
+        {
+        "name": "pass",
+        "msg": messg,
+        "error": None,
+        "output": "Message delivered to mess [age]"
+        },
+        {
+        "name": "fail",
+        "msg": "message",
+        "error": 'error',
+        "output": "Message delivery failed: error"
+        }
+    ]
+    for test_case in test_table:
+        user_input = UserInputService()
+        response = user_input.delivery_report(err=test_case['error'], msg=test_case['msg'])
+        assert response == test_case['output']
 
 '''test systen receive'''
 def test_parse_args_recieve():
