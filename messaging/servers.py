@@ -1,6 +1,6 @@
-from interfaces import StreamingServiceInterface, UserInputDeliveryReportInterface
+from app.interfaces import StreamingServiceInterface, UserInputDeliveryReportInterface
 from confluent_kafka import Producer, Consumer
-from models import PublisherRequest
+from models.models import PublisherRequest
 
 
 class StreamingService(StreamingServiceInterface):
@@ -10,7 +10,7 @@ class StreamingService(StreamingServiceInterface):
     
     def publisher(self, req: PublisherRequest) -> str:
         try:
-            messg = self.user_input.write_message()
+            messg = self.user_input.read_message()
             callback = self.user_input.delivery_report
 
             p = Producer({'bootstrap.servers': req.server})

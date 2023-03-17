@@ -20,7 +20,7 @@ def messg():
 def test_user_input(monkeypatch):
     monkeypatch.setattr('sys.stdin', io.StringIO('my test data input'))
     user_input = UserInputService()
-    i = user_input.write_message()
+    i = user_input.read_message()
     assert i == 'my test data input'
 
 '''test delivery report'''

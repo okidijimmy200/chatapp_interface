@@ -1,20 +1,22 @@
 import  time, threading
 from unittest import mock
-from servers import StreamingService
-from models import PublisherRequest
+from messaging.servers import StreamingService
+from models.models import PublisherRequest
 
-@mock.patch('input.UserInputService')
-@mock.patch('servers.Producer')
+@mock.patch('input.input.UserInputService')
+@mock.patch('servers.servers.Producer')
 def test_producer(Producer, user_input):
     res = StreamingService(user_input)
     p = Producer({'bootstrap.servers': 'server'})
+    # p.flush.return_value = 'test work'
+    # how to mock method implementations in python
     p.flush.return_value = 'test work'
     output = res.publisher(PublisherRequest('localhost:9092', 'mychannel', 'group'))
     assert output == 'test work'
 
 
-@mock.patch('input.UserInputService')
-@mock.patch('servers.Consumer')
+@mock.patch('input.input.UserInputService')
+@mock.patch('servers.servers.Producer')
 def test_consumer(Consumer, user_input, capsys):
     res = StreamingService(user_input)
     Consumer.poll.error.return_value = 'test error'

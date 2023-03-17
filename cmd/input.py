@@ -1,10 +1,10 @@
 import sys, argparse
-from interfaces import UserInputDeliveryReportInterface, ParseArgsInterface
+from app.interfaces import UserInputDeliveryReportInterface, ParseArgsInterface
 
 
 class UserInputService(UserInputDeliveryReportInterface):
 
-    def write_message(self):
+    def read_message(self):
         print('Please enter a message')
 
         try:

@@ -1,14 +1,9 @@
 import threading
-from interfaces import (
+from app.interfaces import (
     ParseArgsInterface,
     StreamingServiceInterface
 )
-from input import (
-    UserInputService,
-    ParseArgsService
-)
-from servers import StreamingService
-from models import PublisherRequest
+from models.models import PublisherRequest
 
 class ChatApplication():
     def __init__(
@@ -43,7 +38,3 @@ class ChatApplication():
             )
             p.start()
             return self.stream_serv.subscriber(channel=self.args.channel, start_from=self.args.start_from, server=self.args.server, group=self.args.group, running=running)
-
-chat_application = ChatApplication(ParseArgsService(), StreamingService(UserInputService()))
-
-chat_application.streams()

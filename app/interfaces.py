@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from models import PublisherRequest, PublisherResponse
+from models.models import PublisherRequest, PublisherResponse
 
 class StreamingServiceInterface(ABC):
     @abstractmethod
@@ -12,7 +12,7 @@ class StreamingServiceInterface(ABC):
 
 class UserInputDeliveryReportInterface(ABC):
     @abstractmethod
-    def write_message(self):
+    def read_message(self):
         pass
 
     @abstractmethod
