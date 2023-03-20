@@ -1,4 +1,4 @@
-from cmd.input import (
+from cmds.input import (
     UserInputService,
     ParseArgsService
 )

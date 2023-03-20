@@ -1,5 +1,7 @@
 [run]
 omit = 
     # ignore all test cases in tests/
-    app/tests/*
+    *test_*/
+    *__init__.py
+    *test*.py
     app/interfaces.py

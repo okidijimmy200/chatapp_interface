@@ -3,8 +3,8 @@ from unittest import mock
 from messaging.servers import StreamingService
 from models.models import PublisherRequest
 
-@mock.patch('input.input.UserInputService')
-@mock.patch('servers.servers.Producer')
+@mock.patch('cmds.input.UserInputService')
+@mock.patch('messaging.servers.Producer')
 def test_producer(Producer, user_input):
     res = StreamingService(user_input)
     p = Producer({'bootstrap.servers': 'server'})
@@ -15,8 +15,8 @@ def test_producer(Producer, user_input):
     assert output == 'test work'
 
 
-@mock.patch('input.input.UserInputService')
-@mock.patch('servers.servers.Producer')
+@mock.patch('cmds.input.UserInputService')
+@mock.patch('messaging.servers.Producer')
 def test_consumer(Consumer, user_input, capsys):
     res = StreamingService(user_input)
     Consumer.poll.error.return_value = 'test error'

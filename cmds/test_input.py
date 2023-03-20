@@ -1,5 +1,5 @@
 import io, sys, pytest
-from input import UserInputService, ParseArgsService
+from cmds.input import UserInputService, ParseArgsService
 
 class Message():
     @staticmethod
