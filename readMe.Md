@@ -1,4 +1,13 @@
 
+[![codecov](https://codecov.io/gh/okidijimmy200/chatapp_interface/branch/master/graph/badge.svg?token=J0FQ2SNHLY)](https://codecov.io/gh/okidijimmy200/chatapp_interface)
+
+<a href="https://codecov.io/gh/okidijimmy200/chatapp_interface" > 
+ <img src="https://codecov.io/gh/okidijimmy200/chatapp_interface/branch/master/graph/badge.svg?token=J0FQ2SNHLY"/> 
+ </a>
+
+ .. image:: https://codecov.io/gh/okidijimmy200/chatapp_interface/branch/master/graph/badge.svg?token=J0FQ2SNHLY 
+ :target: https://codecov.io/gh/okidijimmy200/chatapp_interface
+
 A command line chat application in python that uses message broker services of confluent kafka to send and
 messages.
 
