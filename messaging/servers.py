@@ -1,6 +1,6 @@
 from app.interfaces import StreamingServiceInterface, UserInputDeliveryReportInterface
 from confluent_kafka import Producer, Consumer
-from models.models import PublisherRequest
+from models.models import PublisherRequest, PublisherResponse, ConsumerRequest, ConsumerResponse
 
 
 class StreamingService(StreamingServiceInterface):
@@ -8,7 +8,7 @@ class StreamingService(StreamingServiceInterface):
     def __init__(self, user_input: UserInputDeliveryReportInterface) -> None:
         self.user_input = user_input
     
-    def publisher(self, req: PublisherRequest) -> str:
+    def publisher(self, req: PublisherRequest) -> PublisherResponse:
         try:
             messg = self.user_input.read_message()
             callback = self.user_input.delivery_report
@@ -17,7 +17,8 @@ class StreamingService(StreamingServiceInterface):
             p.poll(0)
             p.produce(req.channel, messg, callback=callback)
             result = p.flush()
-            return result
+            response = PublisherResponse(result)
+            return response.response
 
         except  Exception as e:
             return (
@@ -25,28 +26,29 @@ class StreamingService(StreamingServiceInterface):
                 + f"{type(e).__name__} {str(e)}"
             )
         
-    def subscriber(self, channel, start_from, server, group, running):
+    def subscriber(self, req: ConsumerRequest) -> ConsumerResponse:
         try:
             c = Consumer({
-            'bootstrap.servers': server,
-            'group.id': group,
-            'auto.offset.reset': start_from
+            'bootstrap.servers': req.server,
+            'group.id': req.group,
+            'auto.offset.reset': req.start_from
             })
 
-            c.subscribe([channel])
+            c.subscribe([req.channel])
 
 
-            while running['running']:
+            while req.running['running']:
                 msg = c.poll(1.0)
+                msg_res = ConsumerResponse(msg)
 
-                if msg is None:
+                if msg_res.msg is None:
                     continue
-                if msg.error():
-                    print("Consumer error: {}".format(msg.error()))
+                if msg_res.msg.error():
+                    print("Consumer error: {}".format(msg_res.msg.error()))
                     continue
                 
                 else:
-                    print('Received message: {}'.format(msg.value()))
+                    print('Received message: {}'.format(msg_res.msg.value()))
         except  Exception as e:
             return (
                 f"Failed to receive message:" 

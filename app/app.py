@@ -3,7 +3,7 @@ from app.interfaces import (
     ParseArgsInterface,
     StreamingServiceInterface
 )
-from models.models import PublisherRequest
+from models.models import PublisherRequest, ConsumerRequest
 
 class ChatApplication():
     def __init__(
@@ -35,5 +35,11 @@ class ChatApplication():
                 args=(running,)
             )
             p.start()
-            return self.stream_serv.subscriber(channel=self.args.channel, start_from=self.args.start_from, server=self.args.server, group=self.args.group, running=running)
+            return self.stream_serv.subscriber(ConsumerRequest(
+                self.args.channel, 
+                self.args.start_from, 
+                self.args.server, 
+                self.args.group, 
+                running
+            ))
         

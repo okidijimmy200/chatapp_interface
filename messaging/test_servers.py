@@ -1,7 +1,7 @@
 import  time, threading
 from unittest import mock
 from messaging.servers import StreamingService
-from models.models import PublisherRequest
+from models.models import PublisherRequest, ConsumerRequest
 
 @mock.patch('cmds.input.UserInputService')
 @mock.patch('messaging.servers.Producer')
@@ -34,7 +34,7 @@ def test_consumer(Consumer, user_input, capsys):
         args=(running,)
     )
     t.start()
-    res.subscriber('mychannel', 'beginning', 'localhost:9092', 'mygroup', running)
+    res.subscriber(ConsumerRequest('mychannel', 'beginning', 'localhost:9092', 'mygroup', running))
     captured = capsys.readouterr()
 
     x = list(captured.out)

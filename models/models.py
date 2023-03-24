@@ -1,4 +1,5 @@
 from typing import Tuple, Optional
+from dataclasses import dataclass
 
 
 class PublisherRequest:
@@ -16,6 +17,19 @@ class PublisherResponse:
 
     def __init__(self, response: str):
         self.response = response
+
+
+@dataclass
+class ConsumerRequest:
+    channel: str
+    start_from: str
+    server: str
+    group: str
+    running: dict
+
+@dataclass
+class ConsumerResponse:
+    msg: dict
 
 class Namespace:
     channel: str
