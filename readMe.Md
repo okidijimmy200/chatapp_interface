@@ -1,5 +1,5 @@
 
-![Tests](https://github.com/okidijimmy200/chatapp_interface/actions/workflows/build.yaml/badge.svg) [![codecov](https://codecov.io/gh/okidijimmy200/chatapp_interface/branch/refactor/hexagonal_architecture/graph/badge.svg?token=J0FQ2SNHLY)](https://codecov.io/gh/okidijimmy200/chatapp_interface) 
+[![Python application](https://github.com/okidijimmy200/chatapp_interface/actions/workflows/python-package.yml/badge.svg?branch=refactor%2Fhexagonal_architecture)](https://github.com/okidijimmy200/chatapp_interface/actions/workflows/python-package.yml) [![codecov](https://codecov.io/gh/okidijimmy200/chatapp_interface/branch/refactor/hexagonal_architecture/graph/badge.svg?token=J0FQ2SNHLY)](https://codecov.io/gh/okidijimmy200/chatapp_interface) 
 
 
 A command line chat application in python that uses message broker services of confluent kafka to send and
